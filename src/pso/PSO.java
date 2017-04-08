@@ -58,21 +58,11 @@ public class PSO implements Runnable {
 	public PSO(String[] args) {
 		//// PARAMETERS:
 		if (args.length == 0) {
+			// we use default values if none is given:
 			// > SWARM TOPOLOGY MECHANISM
-			//swarm_topology_mechanism = TOPOLOGY_MECHANISM.DYNAMIC_2011;
-			//swarm_topology_mechanism = TOPOLOGY_MECHANISM.NONE;
+			swarm_topology_mechanism = TOPOLOGY_MECHANISM.NONE;
 			// > SWARM INITIAL TOPOLOGY
-			//swarm_initial_topology = TOPOLOGY.RING;
-			//swarm_initial_topology = TOPOLOGY.VON_NEUMANN;
 			swarm_initial_topology = TOPOLOGY.GLOBAL;
-			//swarm_initial_topology = TOPOLOGY.CLAN;
-			//swarm_initial_topology = TOPOLOGY.RANDOM;
-			//swarm_random_topology_p = 0.2;
-			//swarm_initial_topology = TOPOLOGY.NO_TOPOLOGY;
-			//swarm_initial_topology = TOPOLOGY.NSOME_PARTNERS;
-			//swarm_number_of_clusters = 3;
-			// > DYNAMIC TOPOLOGY FAILURES THRESHOLD
-			particles_failures_threshold = 50;
 			// > BENCHMARK FUNCTION
 			FUNCTION = new F6();	// it uses F6 otherwise
 			// > DIMENSIONS
@@ -133,8 +123,7 @@ public class PSO implements Runnable {
 			// > SWARM TOPOLOGY MECHANISM
 			swarm_topology_mechanism = TOPOLOGY_MECHANISM.values()[Integer.parseInt(args[6])]; 
 			// > DYNAMIC TOPOLOGY FAILURES THRESHOLD
-			// TODO: you need to organize things here for parameters of the topologies!!
-			particles_failures_threshold = 50; // TODO :
+			particles_failures_threshold = 50; 
 			return true;
 		} else {
 			System.out.print("PSO.jar runs particles evaluations dimensions function topology mechanism");
@@ -486,7 +475,6 @@ public class PSO implements Runnable {
 			}
 			
 			//who = chooseByRouletteWheelRankingBased_exponencial(); //chooseByRouletteWheelFitnessBased();
-			// se vai conectar a um melhor, tudo bem.
 			//if ((particles_ranking[who] > particles_ranking[part]) && (failures[who] == 0)) {
 			//if ((ranking_of_particle[who] < ranking_of_particle[particle]) && (particle_failures[who] < particle_failures[particle])) {
 			
@@ -623,7 +611,6 @@ public class PSO implements Runnable {
 		if (i < NUMBER_OF_PARTICLES && j < NUMBER_OF_PARTICLES) {
 			swarm_neighborhood_graph[i][j] = true;
 			swarm_neighborhood_graph[j][i] = true;
-			//swarm_viewer.addEdge(i, j, false);
 			if (!(this.swarm_neigbourhood_graph_jung.containsEdge(i+""+j) || this.swarm_neigbourhood_graph_jung.containsEdge(j+""+i))) {
 				this.swarm_neigbourhood_graph_jung.addEdge(i+"-"+j, (Integer) i, (Integer) j);
 			}
@@ -634,7 +621,6 @@ public class PSO implements Runnable {
 		if (i < NUMBER_OF_PARTICLES && j < NUMBER_OF_PARTICLES) {
 			swarm_neighborhood_graph[i][j] = false;
 			swarm_neighborhood_graph[j][i] = false;
-                        //swarm_viewer.removeEdge(i, j, false);
 			this.swarm_neigbourhood_graph_jung.removeEdge(i+"-"+j);
 			this.swarm_neigbourhood_graph_jung.removeEdge(j+"-"+i);
 		}
